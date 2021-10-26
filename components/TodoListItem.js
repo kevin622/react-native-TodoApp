@@ -2,15 +2,24 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
-const TodoListItem = ({textValue, id, checked, onRemove}) => {
+const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
-        <View style={styles.completeCircle}>
-          <AntDesign name="checkcircleo" size={30} color="#3143e8" />
-        </View>
+      <TouchableOpacity onPressOut={onToggle(id)}>
+        {checked ? (
+          <View style={styles.completeCircle}>
+            <AntDesign name="checkcircleo" size={30} color="#3143e8" />
+          </View>
+        ) : (
+          <View style={styles.circle} />
+        )}
+
+
       </TouchableOpacity>
-      <Text style={[styles.text, styles.strikeText]}>
+      <Text style={[
+        styles.text,
+        checked ? styles.strikeText : styles.unstrikeText
+        ]}>
         {textValue}  
       </Text>
       <TouchableOpacity style={styles.buttonContainer}>
