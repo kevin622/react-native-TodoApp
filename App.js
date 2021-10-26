@@ -1,18 +1,31 @@
-// import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, SafeAreaView, View, TextInput, ScrollView } from 'react-native'; // SafeAreaView는 디바이스 크기를 인식해서 padding 적용하는 듯...?
+import React, { useState } from 'react';
+import { StyleSheet, Text, SafeAreaView, View } from 'react-native'; // SafeAreaView는 디바이스 크기를 인식해서 padding 적용하는 듯...?
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
+
 export default function App() {
+  // todos: { id: Number, textValue: string, checked: boolean }
+  const [todos, setTodos] = useState([])
+  
+  const addTodo = text => {
+    setTodos([
+      ...todos,
+      {id: Math.random().toString(), textValue: text, checked: false},
+    ])
+  }
+
+  const onRemove = id => e => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.appTitle}>Hello There</Text>
       <View style={styles.card}>
-        <TodoInsert />
-        <TodoList />
+        <TodoInsert onAddTodo={addTodo} />
+        <TodoList todos={todos} onRemove={onRemove}/>
       </View>
-      {/* <StatusBar style="auto" /> */}
     </SafeAreaView>
   );
 }
@@ -39,11 +52,4 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  input: {
-    padding: 20,
-    borderBottomColor: '#bbb',
-    borderBottomWidth: 1,
-    fontSize: 24,
-    marginLeft: 20,
-  }
 });
