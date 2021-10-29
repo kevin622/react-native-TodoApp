@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, View } from 'react-native'; // SafeAreaView는 디바이스 크기를 인식해서 padding 적용하는 듯...?
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
+import CameraApp from './components/CameraApp';
 
 
 export default function App() {
@@ -34,9 +35,7 @@ export default function App() {
         <TodoInsert onAddTodo={addTodo} />
         <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
       </View>
-      {/* <Text>
-        Hello
-      </Text> */}
+      <CameraApp />
     </SafeAreaView>
   );
 }
